@@ -51,7 +51,11 @@ $$
 1 & x_2 & y_1 & x_2y_1\\
 1 & x_2 & y_2 & x_2y_2\\
 \end{pmatrix} \cdot
-\begin{pmatrix} a_0\\ a_1\\ a_2\\ a_3\end{pmatrix} =
+\begin{pmatrix} 
+a_0\\ 
+a_1\\ 
+a_2\\ 
+a_3\end{pmatrix} =
 \begin{pmatrix} f(A_{11})\\ f(A_{12})\\ f(A_{21})\\ f(A_{22})
 \end{pmatrix}
 $$
@@ -86,20 +90,24 @@ I took over the coordinates of the scaled pixel and added +1 to the abscissa and
 
 After applying the scaling procedure for the respective pixel, it ends up being $(x_p, y_p)$ from the initial matrix. In order to correctly calculate the size of column V with the coordinates of the scaled pixel. At the end of the program, after exiting the for instructions, I return to the 8-bit unsigned integer data type to confirm the conditions of a valid image.
 
-### **proximal_rotate_RGB**
+### ***proximal_rotate_RGB***
 
 Similar to **proximal_resize_RGB**, only I apply rotations on each pixel depending on the theta angle provided, in our case **rotation angle**. At the end, I get an image rotated with the given angle, obtained as 3 images **Proximal_ROT_R, Proximal_ROT_G, Proximal_ROT_B** united into one.
 
-### **proximal rotate**
+### ***proximal rotate***
 
 I calculate the cosine and sine of the angle **rotation_angle**, it will help us to build the rotation matrix **T_rot**. I initialize the final array with 0, all elements in the array become 0.
 The transformation matrix for Proximal type rotations is obtained after rewriting the system of equations:
 
-$x0=rcosθ$
-$y0=rsinθ=>x1=r(cosθcosφ−sinθsinφ)=x0cosφ−y0sinφ=>|cosφ−sinφ|*|x0|=|x1|$
-$x1=rcos(θ+φ)=>y1=r(sinθcosφ+cosθsinφ)=y0cosφ+x0sinφ=>|sinφ-cosφ|*|y0|=|y1|$
-$y1 = rsin(θ+φ)$
-$T_{rot} - radiens(φ)$
+$$
+\begin{alignat*}{0}
+    & x_0=rcosθ \\
+    & y_0=rsinθ=>x_1=r(cosθcosφ−sinθsinφ)=x0cosφ−y0sinφ=>|cosφ−sinφ|\cdot|x_0|=|x_1| \\
+    & x_1=rcos(θ+φ)=>y_1=r(sinθcosφ+cosθsinφ)=y0cosφ+x0sinφ=>|sinφ-cosφ|\cdot|y_0|=|y_1| \\
+    & y_1 = rsin(θ+φ) \\
+    & T_{rot} - radiens(φ) 
+\end{alignat*}
+$$
 
 To calculate the inverse of the transformation matrix **T** we applied a function predefined in Octave **inv()**, since we have no restrictions here in applying an inverse calculation method.
 
@@ -108,13 +116,15 @@ I go through the entire image, pixel by pixel from the matrix **I**, of size **m
 We applied the same method of calculating the coordinates of the scaled pixel $(x_p, y_p)$  as in **proximal_resize**. I immediately took the coordinates of the scaled pixel and added +1 to the abscissa and ordinate, enough to make the transition from indexing from 0 to 1.
 
 If the image dimensions exceed: 
-$xp < 1 \space\space yp < 1 \\ xp > n \space\space yp > m$
+$xp < 1$ $yp < 1$
+$xp > n$ $yp > m$
 
 The respective pixel ***(x, y)*** is made black and I move on. The coordinates of the points that delimit the 4 zones, of a square of size 2 x 2, of replication of the function ***f***.
 
 **The conditions that ensure that it doesn't leave the unit square**
 
 **y1** - on the last line, **m**, decrease one unit to **y1, y2** to return to the pixel matrix.
+
 **x1** - on the last column, **n**, decrease one unit to **x1, x2** to return to the pixel matrix.
 Calculate the interpolation coefficients by calling the **proximal_coef** program.
 
