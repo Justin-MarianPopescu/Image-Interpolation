@@ -115,17 +115,22 @@ I go through the entire image, pixel by pixel from the matrix **I**, of size **m
 
 We applied the same method of calculating the coordinates of the scaled pixel $(x_p, y_p)$  as in **proximal_resize**. I immediately took the coordinates of the scaled pixel and added +1 to the abscissa and ordinate, enough to make the transition from indexing from 0 to 1.
 
-If the image dimensions exceed: 
-$xp < 1$ $yp < 1$
-$xp > n$ $yp > m$
+If the image dimensions exceed:
+
+$$
+\begin{flalign}
+& xp < 1 \space xp > n & \\
+& yp > 1 \space yp > m &
+\end{flalign}
+$$
 
 The respective pixel ***(x, y)*** is made black and I move on. The coordinates of the points that delimit the 4 zones, of a square of size 2 x 2, of replication of the function ***f***.
 
-**The conditions that ensure that it doesn't leave the unit square**
+**The conditions that ensure that it doesn't leave the unit square**.
 
-**y1** - on the last line, **m**, decrease one unit to **y1, y2** to return to the pixel matrix.
+- **y1** - on the last line, **m**, decrease one unit to **y1, y2** to return to the pixel matrix.
 
-**x1** - on the last column, **n**, decrease one unit to **x1, x2** to return to the pixel matrix.
+- **x1** - on the last column, **n**, decrease one unit to **x1, x2** to return to the pixel matrix.
 Calculate the interpolation coefficients by calling the **proximal_coef** program.
 
 The following coordinate transformation is applied to each pixel: $f(x,y) = a_0 + a_1x + a_2y + a_3xy$. the program ended, after the confirmation of the validation conditions of a image.
