@@ -1,6 +1,6 @@
 ## **Bicubic Interpolation**
 
-### **bicubic_coef**
+### ***bicubic_coef***
 
 The intermediate matrix **T** is offered on page 9 in the PDF, in the final form of the matrix solution, of the **Bicubic** interpolation coefficients. 
 Next to the matrix which forms the system of **16 equations**: 
@@ -11,7 +11,7 @@ Next to the matrix which forms the system of **16 equations**:
 
 Each equation resulted from the Bicubic interpolation form: $f(x, y), fx(x, y), fy(x, y), fxy(x, y)$.
 
-### **bicubic_resize_RGB**
+### ***bicubic_resize_RGB***
 
 Similar to the **_RGB** functions from **Proximal**, only the 3 function calls for transforming images containing only the color filter (RED, GREEN, BLUE) are changed with **bicubic_resize**.
 
@@ -19,22 +19,22 @@ Similar to the **_RGB** functions from **Proximal**, only the 3 function calls f
 
 For the 12 points in the matrix that form the system of equations, I will only apply a derivative approximation method to 12 equations. In these *4 points (0,0), (0,1), (1,0) and (1,1) the derivatives are known as 0*.
 
-**fx**
+### ***fx***
  - check if the coordinates of x exceed the maximum length of the image 2 & n-1 (2 because we do not change the first pixel from the Ox axis)
 - use the approximation provided for the derivative of f as a function of x:
 $$\small f_x = \frac{f(x + 1, y) - f(x - 1, y)}{2}$$
 
-**fy** 
+### ***fy*** 
 - check if the y coordinates exceed the maximum length of the image 2 & m-1 (2 because we do not change the first pixel from the Oy axis)
 - use the approximation provided for the derivative of f as a function of y:
 $$\small f_y = \frac{f(x, y + 1) - f(x, y - 1)}{2}$$
 
-**fxy** 
+### ***fxy*** 
 - apply both verification conditions as for fx & fy
 - use the approximation offered to the derivative of f of order 2 depending on x and y:
 $$\small f_{xy} = \frac{f(x - 1, y - 1) + f(x + 1, y + 1) - f(x + 1, y - 1) - f(x - 1, y + 1)}{4}$$
 
-### **precalc_d**
+### ***precalc_d***
 
 At the beginning of the program, I transform the **I** image into a double and apply the derivation functions on the **I** image, it will be useful to have the pixels in the "real form" when we will have to find the image interpolation coefficients with the Bicubic method.
 
@@ -42,7 +42,7 @@ Calculate the derivatives of the image $I_x, I_y, I_{xy}$ depending on $f_x, f_y
 
 It would have been the derivatives of the image $I_x, I_y, I_{xy}$ depending on $f_x, f_y, f_{xy}$ if the first force had been y from 1 to n followed by the second force x from 1 to m. At the end, get 3 pixel matrices obtained as derivatives of $I \space dx, dy, dx(dy)$.
 
-### **bicubic_resize**
+### ***bicubic_resize***
 
 The method to resize the image is approximative like ***proximal_resize*** method only that the interpolation value of the pixel $(x, y)$ is different.
 
@@ -84,6 +84,7 @@ peak on the last column -  **floor(yp) = n**, get back to previous column in the
 I pass the point (xp,yp) from the unit square, subtracting from $x_p-x_1$ and $y_p-y_1$.
 
 The result of the transformation of the pixel following the Bicubic transformation is obtained by multiplying: 
+
 ***LINE***:
  - vector with coordinates x, as a degree 4 polynomial $[ 1x x^2 x^3 x^4 ]$, the matrix of coefficients of size 4x4 similar to the matrix **I** from the function **bicubic_coef**.
 
